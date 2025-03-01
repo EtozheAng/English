@@ -1,0 +1,272 @@
+@import 'normalize';
+@import 'games';
+// Основные переменные
+$primary-color: #3490dc;
+$secondary-color: #38c172;
+$background-color: #f8fafc;
+$text-color: #2d3748;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: $background-color;
+    color: $text-color;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* Основной контент растягивается, футер всегда снизу */
+    min-height: 100vh;
+}
+
+
+.logo {
+    width: 4rem;
+    display: block;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header {
+    background-color: $primary-color;
+    color: white;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo img {
+        height: 40px; // Задайте нужный размер логотипа
+    }
+
+    &__nav {
+        .header__menu {
+            display: flex;
+            list-style-type: none;
+            gap: 2rem;
+
+            .menu-item {
+                color: white;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: $secondary-color;
+                }
+            }
+        }
+    }
+
+    &__auth {
+        display: flex;
+        gap: 1rem;
+
+        .auth-button {
+            background-color: transparent;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+
+            &:hover {
+                background-color: white;
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+// Стили для секции с особенностями
+.features-section {
+    padding: 40px 0;
+    background-color: #f4f4f4;
+
+    &__title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    &__list {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    &__link {
+        position: absolute;
+        inset: 0;
+    }
+
+    &__item {
+        position: relative;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 30%;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    &__item-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+
+    &__item-description {
+        font-size: 1rem;
+        color: #7f8c8d;
+        line-height: 1.5;
+    }
+}
+
+// Адаптивность
+@media screen and (max-width: 768px) {
+    .features-section__list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .features-section__item {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 14px;
+    text-align: center;
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    &__logo {
+        flex: 1;
+
+        .footer__logo-img {
+            max-width: 150px;
+            height: auto;
+        }
+    }
+
+    &__nav {
+        flex: 2;
+        display: flex;
+        justify-content: center;
+
+        ul {
+            display: flex;
+            gap: 20px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__social {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+
+        .footer__social-link {
+            color: #fff;
+            margin-left: 15px;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__bottom {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #ccc;
+    }
+}
+
+.hero {
+    background-color: $primary-color;
+    color: white;
+    padding: 4rem 0 5rem;
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; // Распределяет пространство между элементами
+        height: 20rem; // Высота блока hero на весь экран
+        text-align: center;
+        align-items: center; // Выравнивание элементов по центру
+    }
+
+    &__title {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem; // Отступ от подзаголовка
+    }
+
+    &__subtitle {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    &__cta {
+        background-color: $secondary-color;
+        padding: 1rem 2rem;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease;
+        margin-top: auto; // Это прижмет кнопку к нижнему краю hero
+
+        &:hover {
+            background-color: darken($secondary-color, 10%);
+        }
+    }
+}
