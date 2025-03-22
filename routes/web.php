@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-// routes/web.php
 use App\Http\Controllers\GameController;
 
 
 // Главная страница
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 })->name('home');
 
 // Страница "О нас"
@@ -23,7 +22,9 @@ Route::get('/courses', function () {
 
 
 
-Route::get('/games', [GameController::class, 'index'])->middleware(['auth', 'verified'])->name('games');
+// Страницы Игры
+Route::get('/games', [GameController::class, 'index'])->name('games');
+Route::get('games/image-card', [GameController::class, 'imageCard'])->name('games.imageCard');
 
 
 

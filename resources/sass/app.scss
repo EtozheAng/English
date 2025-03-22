@@ -1,95 +1,16 @@
-@import 'normalize';
-@import 'games';
+@use 'normalize';
+@use 'variables';
+@use 'global';
+@use 'games';
+@use 'components/header'; // Импорт стилей header
+@use 'components/footer'; // Импорт стилей footer
+
 // Основные переменные
 $primary-color: #3490dc;
 $secondary-color: #38c172;
 $background-color: #f8fafc;
 $text-color: #2d3748;
 
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: $background-color;
-    color: $text-color;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    /* Основной контент растягивается, футер всегда снизу */
-    min-height: 100vh;
-}
-
-
-.logo {
-    width: 4rem;
-    display: block;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.header {
-    background-color: $primary-color;
-    color: white;
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    &__container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    &__logo img {
-        height: 40px; // Задайте нужный размер логотипа
-    }
-
-    &__nav {
-        .header__menu {
-            display: flex;
-            list-style-type: none;
-            gap: 2rem;
-
-            .menu-item {
-                color: white;
-                text-decoration: none;
-                font-size: 1.1rem;
-                transition: color 0.3s;
-
-                &:hover {
-                    color: $secondary-color;
-                }
-            }
-        }
-    }
-
-    &__auth {
-        display: flex;
-        gap: 1rem;
-
-        .auth-button {
-            background-color: transparent;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border: 2px solid white;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: background-color 0.3s, color 0.3s;
-
-            &:hover {
-                background-color: white;
-                color: $primary-color;
-            }
-        }
-    }
-}
 
 // Стили для секции с особенностями
 .features-section {
@@ -266,7 +187,23 @@ body {
         margin-top: auto; // Это прижмет кнопку к нижнему краю hero
 
         &:hover {
-            background-color: darken($secondary-color, 10%);
+            scale: .95;
         }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 800px;
+        margin-inline: auto;
+    }
+
+    &__img {
+        flex: 1 0 50%;
+    }
+
+    &__lists {
+        font-size: 1.2rem;
     }
 }

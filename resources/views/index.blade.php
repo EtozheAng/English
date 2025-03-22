@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
+@extends('layouts.home')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    @vite('resources/js/app.js') <!-- Вставляем скомпилированные скрипты и стили через Vite -->
-</head>
+@section('title', 'Игры для детей')
 
-<body>
-    @include('include.header')
+@section('content')
 
     <main class="content">
         <!-- Герой-секция -->
         <section class="hero">
             <div class="container">
                 <div class="hero-item">
-                    <h1 class="hero__title">Добро пожаловать на сайт для изучения английского языка!</h1>
-                    <p class="hero__subtitle">Лучшие ресурсы для обучения и игры для детей.</p>
+                    <h1 class="hero__title">Добро пожаловать в мир английского языка!</h1>
+                    <div class="hero__wrapper">
+                        <p class="hero__subtitle">Привет, юный исследователь!
+                            Чтобы начать своё приключение в мире английского языка, создай аккаунт и открой доступ к
+                            интерактивным урокам и играм.
+                        </p>
+                    </div>
                     <a href="{{ route('register') }}" class="hero__cta">Зарегистрироваться</a>
                 </div>
             </div>
@@ -53,11 +51,4 @@
 
 
     </main>
-
-
-    @include('include.footer')
-
-    <script src="{{ mix('js/app.js') }}"></script>
-</body>
-
-</html>
+@endsection

@@ -1,0 +1,31 @@
+// Основные переменные
+$primary-color: #3490dc;
+$secondary-color: #38c172;
+$background-color: #f8fafc;
+$text-color: #2d3748;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: $background-color;
+    color: $text-color;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* Основной контент растягивается, футер всегда снизу */
+    min-height: 100vh;
+}
+
+
+.logo {
+    width: 4rem;
+    display: block;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
