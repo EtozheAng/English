@@ -22,9 +22,13 @@ Route::get('/courses', function () {
 
 
 
-// Страницы Игры
+// Страницы Игр
 Route::get('/games', [GameController::class, 'index'])->name('games');
-Route::get('games/image-card', [GameController::class, 'imageCard'])->name('games.imageCard');
+Route::get('games/image-card/', [GameController::class, 'gameOneSections'])->name('games.sections');
+Route::get('games/image-card/{section?}', [GameController::class, 'gameOneImageCard'])->name('games.imageCard');
+
+Route::get('games/connect-words/', [GameController::class, 'connectWords'])->name('games.connect-words');
+
 
 
 

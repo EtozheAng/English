@@ -3,10 +3,10 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     server: {
-        host: 'english-kids.ru', // Укажите ваш домен
+        host: 'school-dunaeva.ru', // Укажите ваш домен
         port: 5173, // Порт, который использует Vite
         hmr: {
-            host: 'english-kids.ru', // Укажите ваш домен для HMR
+            host: 'school-dunaeva.ru', // Укажите ваш домен для HMR
         },
         cors: true, // Разрешить CORS
     },

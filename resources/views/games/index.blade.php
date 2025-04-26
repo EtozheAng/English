@@ -13,7 +13,7 @@
                 <p class="feature__description">
                     Уроки с элементами игры и тестирования для детей, которые сделают обучение веселым!
                 </p>
-                <a href="{{ route('games.imageCard') }}" class="btn btn-primary">Играть</a>
+                <a href="{{ route('games.sections') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Вторая игра -->
@@ -22,7 +22,7 @@
                 <p class="feature__description">
                     Развивающие игры для тренировки математических навыков с увлекательными задачами.
                 </p>
-                <a href="#" class="btn btn-primary">Играть</a>
+                <a href="{{ route('games.connect-words') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Третья игра -->
