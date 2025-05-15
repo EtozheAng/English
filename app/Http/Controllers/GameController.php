@@ -10,6 +10,7 @@ class GameController extends Controller
     {
         return view('games.index');
     }
+    // game 1
     public function gameOneSections()
     {
         $gameData = $this->gatGameData();
@@ -31,7 +32,7 @@ class GameController extends Controller
 
         // Если раздел не указан или не существует - перенаправляем
         if (!$section || !array_key_exists($section, $categories)) {
-            return redirect()->route('games.sections');
+            return redirect()->route('games.create-words-section');
         }
 
         $selectedCategory = $categories[$section];
@@ -207,4 +208,45 @@ class GameController extends Controller
             ]
         ];
     }
+
+    // game 3
+    public function createWordsSections () {
+        $gameData = $this->gatGameData();
+        $categories = array_map(function($section) {
+            return [
+                'icon' => $section['icon'],
+                'title' => $section['title'],
+                'description' => $section['description']
+            ];
+        }, $gameData);
+    
+        return view('games.game-3.sections', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function createWords($section = null)
+    {
+        $categories = $this->gatGameData();
+
+        // Если раздел не указан или не существует - перенаправляем
+        if (!$section || !array_key_exists($section, $categories)) {
+            return redirect()->route('games.create-words-section');
+        }
+
+        $selectedCategory = $categories[$section];
+
+        // Перемешиваем слова для каждого уровня
+        foreach ($selectedCategory['items'] as &$item) {
+            $item['separate'] = str_split($item['correct_word']);
+            shuffle($item['separate']);
+        }
+
+        return view('games.game-3.create-words', [
+            'levels' => $selectedCategory['items'],
+            'section' => $section,
+            'sectionTitle' => $selectedCategory['title'],
+        ]);
+    }
+    
 }

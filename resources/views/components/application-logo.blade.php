@@ -1,6 +1,7 @@
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg {{ $attributes }} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    aria-hidden="true" role="img" class="iconify iconify--emojione" preserveAspectRatio="xMidYMid meet">
+<svg {{ $attributes }} width="4rem" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--emojione"
+    preserveAspectRatio="xMidYMid meet">
 
     <g fill="#c7e755">
         <ellipse cx="32" cy="33.5" rx="22.3" ry="25.9">

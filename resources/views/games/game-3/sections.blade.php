@@ -61,7 +61,7 @@
 
         <div class="section-grid">
             @foreach ($categories as $key => $category)
-                <a href="{{ route('games.image-card', ['section' => $key]) }}" class="section-card">
+                <a href="{{ route('games.create-words', ['section' => $key]) }}" class="section-card">
                     <div class="section-icon">{{ $category['icon'] }}</div>
                     <h3 class="section-title">{{ $category['title'] }}</h3>
                     <p class="section-desc">{{ $category['description'] }}</p>

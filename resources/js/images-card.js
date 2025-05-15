@@ -167,7 +167,7 @@ class ImageCardGame {
     }
 
     goToHome() {
-        window.location.href = "{{ route('games.sections') }}";
+        window.location.href = "{{ route('games.image-card-section') }}";
     }
 }
 

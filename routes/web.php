@@ -24,10 +24,13 @@ Route::get('/courses', function () {
 
 // Страницы Игр
 Route::get('/games', [GameController::class, 'index'])->name('games');
-Route::get('games/image-card/', [GameController::class, 'gameOneSections'])->name('games.sections');
-Route::get('games/image-card/{section?}', [GameController::class, 'gameOneImageCard'])->name('games.imageCard');
+Route::get('games/image-card/', [GameController::class, 'gameOneSections'])->name('games.image-card-section');
+Route::get('games/image-card/{section?}', [GameController::class, 'gameOneImageCard'])->name('games.image-card');
 
 Route::get('games/connect-words/', [GameController::class, 'connectWords'])->name('games.connect-words');
+
+Route::get('games/create-words/', [GameController::class, 'createWordsSections'])->name('games.create-words-section');
+Route::get('games/create-words/{section?}', [GameController::class, 'createWords'])->name('games.create-words');
 
 
 

@@ -13,7 +13,7 @@
                 <p class="feature__description">
                     Уроки с элементами игры и тестирования для детей, которые сделают обучение веселым!
                 </p>
-                <a href="{{ route('games.sections') }}" class="btn btn-primary">Играть</a>
+                <a href="{{ route('games.image-card-section') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Вторая игра -->
@@ -31,7 +31,7 @@
                 <p class="feature__description">
                     Игры для тренировки логического мышления и решения задач с элементами стратегии.
                 </p>
-                <a href="#" class="btn btn-primary">Играть</a>
+                <a href="{{ route('games.create-words-section') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Дополнительные игры можно добавлять по аналогии -->
