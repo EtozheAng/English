@@ -32,8 +32,8 @@ Route::get('games/connect-words/', [GameController::class, 'connectWords'])->nam
 Route::get('games/create-words/', [GameController::class, 'createWordsSections'])->name('games.create-words-section');
 Route::get('games/create-words/{section?}', [GameController::class, 'createWords'])->name('games.create-words');
 
-Route::get('games/missing-letter-game/', [GameController::class, 'missingWordsSections'])->name('games.missing-letter-game-section');
-Route::get('games/missing-letter-game/{section?}', [GameController::class, 'missingWords'])->name('games.missing-letter-game');
+Route::get('games/missing-letter-game/', [GameController::class, 'gameFourSections'])->name('games.missing-letter-game-section');
+Route::get('games/missing-letter-game/{section?}', [GameController::class, 'gameFourCard'])->name('games.missing-letter-game');
 
 
 

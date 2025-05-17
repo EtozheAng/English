@@ -10,10 +10,10 @@
 
         <div class="game-container">
             @foreach ($levels as $index => $level)
-                <div class="game-slide level {{ $index === 0 ? 'active' : '' }}" data-level="{{ $level['id'] }}">
+                <div class="game-slide level {{ $index === 0 ? 'active' : '' }}">
                     <div class="image-container">
-                        <img src="{{ asset($level['image']) }}" alt="{{ $level['full'] }}">
-                        <div class="hint">{{ $level['hint'] }}</div>
+                        <img src="{{ asset($level['image']) }}" alt="{{ $level['correct_word'] }}">
+                        <div class="hint">{{ $sectionTitle }}</div>
                     </div>
 
                     <div class="word-container">
@@ -27,8 +27,7 @@
                     </div>
 
                     <div class="input-group">
-                        <input type="text" class="letter-input" maxlength="1" placeholder="?" autofocus
-                            data-level="{{ $level['id'] }}">
+                        <input type="text" class="letter-input" maxlength="1" placeholder="?" autofocus>
                         <button class="check-btn">Проверить</button>
                     </div>
 
@@ -111,7 +110,8 @@
     }
 
     .image-container img {
-        max-height: 200px;
+        max-height: 300px;
+        object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     }

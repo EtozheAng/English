@@ -5,23 +5,9 @@ class MissingLetterGame extends BaseGame {
         super();
         this.levelCompleted = false;
         this.setupEventListeners();
-        // this.initFirstLevel();
     }
 
-    // initFirstLevel() {
-    //     const firstLevel = document.querySelector('.level');
-    //     if (firstLevel) {
-    //         firstLevel.classList.add('active');
-    //         const input = firstLevel.querySelector('.letter-input');
-    //         if (input) {
-    //             input.focus();
-    //             console.log('First level input focused'); // Отладка
-    //         }
-    //     }
-    // }
-
     setupEventListeners() {
-        console.log('Setting up event listeners'); // Отладка
 
         // Обработка кнопки проверки
         document.querySelectorAll('.check-btn').forEach(btn => {
@@ -48,7 +34,6 @@ class MissingLetterGame extends BaseGame {
     }
 
     checkAnswer(level) {
-        console.log('Checking answer for level:', level); // Отладка
 
         if (this.levelCompleted) {
             console.log('Level already completed');
@@ -77,8 +62,6 @@ class MissingLetterGame extends BaseGame {
     }
 
     handleCorrectAnswer(level, feedback, correctLetter, input) {
-        console.log('Correct answer');
-
         const missingLetterElem = level.querySelector('.letter.missing');
         missingLetterElem.textContent = correctLetter.toUpperCase();
         missingLetterElem.classList.add('correct-letter');
@@ -99,13 +82,7 @@ class MissingLetterGame extends BaseGame {
     }
 
     handleIncorrectAnswer(feedback, input) {
-        console.log('Incorrect answer');
-        console.log('Счет:' + this.currentScore);
-
         this.currentScore = Math.max(0, this.currentScore - 2);
-
-        console.log('Счет после вычитания:' + this.currentScore);
-
         feedback.textContent = 'Неверно! Попробуйте еще раз (-2 очка)';
         feedback.className = 'feedback incorrect-feedback';
         input.value = '';

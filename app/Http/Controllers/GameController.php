@@ -63,16 +63,19 @@ class GameController extends Controller
                     [
                         'image' => 'images/fruits/banana.jpg',
                         'correct_word' => 'Banana',
-                        'words' => ['Banana', 'Apple', 'Grapes', 'Pineapple']
+                        'words' => ['Banana', 'Apple', 'Grapes', 'Pineapple'],
+                        
                     ],
                     [
                         'image' => 'images/fruits/orange.webp',
                         'correct_word' => 'Orange',
+                       
                         'words' => ['Orange', 'Lemon', 'Kiwi', 'Mango']
                     ],
                     [
                         'image' => 'images/fruits/strawberry.webp',
                         'correct_word' => 'Strawberry',
+                       
                         'words' => ['Strawberry', 'Raspberry', 'Blueberry', 'Blackberry']
                     ]
                 ]
@@ -282,32 +285,88 @@ class GameController extends Controller
     }
 
 
-    public function missingWordsSections() {
-        $levels = $this->gatGameDataFour();
-        return view('games.game-4.create-words', [
-            'levels' => $levels,
-            'gameTitle' => 'Вставь пропущенную букву'
+    // public function missingWordsSections() {
+    //     $levels = $this->gatGameData();
+
+    //     dd($levels);
+    //     return view('games.game-4.create-words', [
+    //         'levels' => $levels,
+    //         'gameTitle' => 'Вставь пропущенную букву'
+    //     ]);
+    // }
+
+    // public function missingWords(Request $request)
+    // {
+    //     $levelId = $request->input('level_id');
+    //     $userAnswer = strtolower($request->input('answer'));
+        
+    //     $levels = $this->gatGameDataFour();
+
+    //     if (!isset($levels[$levelId])) {
+    //         return response()->json(['error' => 'Level not found'], 404);
+    //     }
+
+    //     $isCorrect = ($userAnswer === $levels[$levelId]['missing_letter']);
+        
+    //     return response()->json([
+    //         'correct' => $isCorrect,
+    //         'correctLetter' => $levels[$levelId]['missing_letter'],
+    //         'nextLevel' => $isCorrect ? $levelId + 1 : null
+    //     ]);
+    // }
+
+    //game 4.1
+
+    public function gameFourSections()
+    {
+        $gameData = $this->gatGameData();
+        $categories = array_map(function($section) {
+            return [
+                'icon' => $section['icon'],
+                'title' => $section['title'],
+                'description' => $section['description']
+            ];
+        }, $gameData);
+    
+        return view('games.game-4.sections', [
+            'categories' => $categories
         ]);
     }
-
-    public function missingWords(Request $request)
+    public function gameFourCard(Request $request, $section = null)
     {
-        $levelId = $request->input('level_id');
-        $userAnswer = strtolower($request->input('answer'));
-        
-        $levels = $this->gatGameDataFour();
+        $categories = $this->gatGameData();
 
-        if (!isset($levels[$levelId])) {
-            return response()->json(['error' => 'Level not found'], 404);
+        // Если раздел не указан или не существует - перенаправляем
+        if (!$section || !array_key_exists($section, $categories)) {
+            return redirect()->route('games.sections');
         }
 
-        $isCorrect = ($userAnswer === $levels[$levelId]['missing_letter']);
-        
-        return response()->json([
-            'correct' => $isCorrect,
-            'correctLetter' => $levels[$levelId]['missing_letter'],
-            'nextLevel' => $isCorrect ? $levelId + 1 : null
+        $selectedCategory = $categories[$section];
+
+        foreach($selectedCategory['items'] as &$item) {
+            
+            // Преобразуем correct_word в массив букв
+            $letters = str_split($item['correct_word']);
+
+            // Выбираем случайную букву (кроме первой)
+            $randomIndex = rand(1, count($letters) - 1);
+            $missingLetter = $letters[$randomIndex];
+
+            // Заменяем выбранную букву на '_'
+            $letters[$randomIndex] = '_';
+            $wordWithMissing = implode('', $letters);
+
+            // Добавляем новые поля в массив
+            $item['word'] = $wordWithMissing;
+            $item['missing'] = strtolower($missingLetter);
+        }
+
+        return view('games.game-4.missing-letter', [
+            'levels' => $selectedCategory['items'],
+            'section' => $section,
+            'sectionTitle' => $selectedCategory['title'],
         ]);
+
     }
 
 
