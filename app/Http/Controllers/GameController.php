@@ -248,5 +248,68 @@ class GameController extends Controller
             'sectionTitle' => $selectedCategory['title'],
         ]);
     }
+
+    // game 4
+
+    private function gatGameDataFour()  {
+        $levels = [
+            [
+                'id' => 1,
+                'word' => 'C_T',
+                'missing' => 'a',
+                'full' => 'cat',
+                'image' => 'images/animals/cat.jpg',
+                'hint' => 'Домашнее животное'
+            ],
+            [
+                'id' => 2,
+                'word' => 'D_G',
+                'missing' => 'o',
+                'full' => 'dog',
+                'image' => 'images/animals/dog.jpg',
+                'hint' => 'Лучший друг человека'
+            ],
+            [
+                'id' => 3,
+                'word' => 'BAN_NA',
+                'missing' => 'a',
+                'full' => 'banana',
+                'image' => 'images/fruits/banana.jpg',
+                'hint' => 'Жёлтый фрукт'
+            ]
+        ];
+        return $levels;
+    }
+
+
+    public function missingWordsSections() {
+        $levels = $this->gatGameDataFour();
+        return view('games.game-4.create-words', [
+            'levels' => $levels,
+            'gameTitle' => 'Вставь пропущенную букву'
+        ]);
+    }
+
+    public function missingWords(Request $request)
+    {
+        $levelId = $request->input('level_id');
+        $userAnswer = strtolower($request->input('answer'));
+        
+        $levels = $this->gatGameDataFour();
+
+        if (!isset($levels[$levelId])) {
+            return response()->json(['error' => 'Level not found'], 404);
+        }
+
+        $isCorrect = ($userAnswer === $levels[$levelId]['missing_letter']);
+        
+        return response()->json([
+            'correct' => $isCorrect,
+            'correctLetter' => $levels[$levelId]['missing_letter'],
+            'nextLevel' => $isCorrect ? $levelId + 1 : null
+        ]);
+    }
+
+
     
 }

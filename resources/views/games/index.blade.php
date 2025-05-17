@@ -34,6 +34,15 @@
                 <a href="{{ route('games.create-words-section') }}" class="btn btn-primary">Играть</a>
             </div>
 
+            <!-- Четвертая игра -->
+            <div class="feature">
+                <h3 class="feature__title">Игра 4</h3>
+                <p class="feature__description">
+                    Игры для тренировки логического мышления и решения задач с элементами стратегии.
+                </p>
+                <a href="{{ route('games.missing-letter-game-section') }}" class="btn btn-primary">Играть</a>
+            </div>
+
             <!-- Дополнительные игры можно добавлять по аналогии -->
         </div>
     </div>

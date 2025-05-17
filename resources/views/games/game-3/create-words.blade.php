@@ -3,7 +3,8 @@
 @section('title', 'Игры для детей')
 
 
-@vite(['resources/js/create-words.js'])
+{{-- @vite(['resources/js/create-words.js']) --}}
+@vite(['resources/js/word-game.js'])
 
 @section('content')
 
@@ -73,7 +74,7 @@
 
         .words-grid {
             /* display: grid;
-                                                                                                                        grid-template-columns: repeat(2, 1fr); */
+                                                                                                                                grid-template-columns: repeat(2, 1fr); */
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
