@@ -1,10 +1,12 @@
 export class BaseGame {
-    constructor() {
+    constructor(gameId = 'default_game') {
+        this.gameId = gameId; // Уникальный ID игры ('missing_letter', 'word_match' и т.д.)
+        this.bestScoreKey = `bestScore_${this.gameId}`; // Ключ для localStorage
         this.currentScore = 0;
         this.maxPossibleScore = 0;
         this.startTime = null;
         this.gameDuration = 0;
-        this.bestScore = localStorage.getItem('bestScore') || 0;
+        this.bestScore = parseInt(localStorage.getItem(this.bestScoreKey)) || 0;
         this.initializeGame();
     }
 
@@ -41,18 +43,12 @@ export class BaseGame {
         document.querySelector('.home-btn')?.addEventListener('click', () => this.goToHome());
     }
 
-    resetLevelsDisplay() {
-        document.querySelectorAll('.level').forEach((level, index) => {
-            level.style.display = index === 0 ? 'block' : 'none';
-        });
-    }
-
     proceedToNextLevel(currentLevel) {
-        currentLevel.style.display = 'none';
+        currentLevel.classList.remove('active');
         const nextLevel = currentLevel.nextElementSibling;
 
         if (nextLevel?.classList.contains('level')) {
-            nextLevel.style.display = 'block';
+            nextLevel.classList.add('active')
         } else {
             this.showFinalResults();
         }
@@ -64,7 +60,7 @@ export class BaseGame {
 
         if (isNewRecord) {
             this.bestScore = this.currentScore;
-            localStorage.setItem('bestScore', this.bestScore);
+            localStorage.setItem(this.bestScoreKey, this.bestScore);
         }
 
         document.getElementById('results').innerHTML = this.generateResultsHTML(duration, isNewRecord);

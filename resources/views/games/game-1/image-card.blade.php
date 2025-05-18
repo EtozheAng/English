@@ -237,8 +237,7 @@
         <!-- Уровни игры -->
         <div class="levels-wrapper">
             @foreach ($levels as $index => $level)
-                <div class="level" data-level="{{ $index }}"
-                    style="{{ $index === 0 ? 'display: block;' : 'display: none;' }}">
+                <div class="level {{ $index === 0 ? 'active' : '' }}" data-level="{{ $index }}">
                     <div class="level-image-container">
                         <img src="{{ asset($level['image']) }}" alt="{{ $level['correct_word'] }}" class="level-image">
                     </div>

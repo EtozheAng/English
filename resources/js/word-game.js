@@ -2,7 +2,7 @@ import { BaseGame } from './base-game.js';
 
 class WordGame extends BaseGame {
     constructor() {
-        super();
+        super('word_game');
         this.setupGameSpecificListeners();
     }
 
@@ -46,18 +46,21 @@ class WordGame extends BaseGame {
         clonedLetter.style.visibility = 'visible';
         answerArea.appendChild(clonedLetter);
 
+        // console.log(answerArea.children.length)
+        // console.log(this.getCurrentWordLength())
         if (answerArea.children.length === this.getCurrentWordLength()) {
             this.checkAnswer(answerArea);
         }
     }
 
     findOriginalLetter(letter) {
-        const activeLevel = document.querySelector('.level[style*="display: block"]');
+        const activeLevel = document.querySelector('.level.active');
         return activeLevel?.querySelector(`.letter[data-letter="${letter}"][style*="visibility: hidden"]`);
     }
 
     getCurrentWordLength() {
-        const activeLevel = document.querySelector('.level[style*="display: block"]');
+        const activeLevel = document.querySelector('.level.active');
+        // console.log(activeLevel)
         return activeLevel?.querySelector('.level-image').alt.length || 0;
     }
 
@@ -67,8 +70,12 @@ class WordGame extends BaseGame {
             .join('')
             .toLowerCase();
 
+        // console.log(userAnswer)
+
         const correctWord = answerArea.closest('.level')
             .querySelector('.level-image').alt.toLowerCase();
+
+        // console.log(correctWord)
 
         if (userAnswer === correctWord) {
             this.handleCorrectAnswer(answerArea);

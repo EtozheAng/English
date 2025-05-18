@@ -2,7 +2,7 @@ import { BaseGame } from './base-game.js';
 
 class ImageCardGame extends BaseGame {
     constructor() {
-        super();
+        super('image-card');
         this.setupGameSpecificListeners();
     }
 

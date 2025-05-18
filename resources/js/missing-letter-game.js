@@ -2,7 +2,7 @@ import { BaseGame } from './base-game.js';
 
 class MissingLetterGame extends BaseGame {
     constructor() {
-        super();
+        super('missing_letter');
         this.levelCompleted = false;
         this.setupEventListeners();
     }
@@ -52,7 +52,7 @@ class MissingLetterGame extends BaseGame {
         const userAnswer = input.value.trim().toLowerCase();
         const correctLetter = missingLetter.dataset.correct;
 
-        console.log('User:', userAnswer, 'Correct:', correctLetter);
+        // console.log('User:', userAnswer, 'Correct:', correctLetter);
 
         if (userAnswer === correctLetter) {
             this.handleCorrectAnswer(level, feedback, correctLetter, input);
@@ -63,7 +63,7 @@ class MissingLetterGame extends BaseGame {
 
     handleCorrectAnswer(level, feedback, correctLetter, input) {
         const missingLetterElem = level.querySelector('.letter.missing');
-        missingLetterElem.textContent = correctLetter.toUpperCase();
+        missingLetterElem.textContent = correctLetter.toLowerCase();
         missingLetterElem.classList.add('correct-letter');
 
         input.disabled = true;
@@ -71,8 +71,8 @@ class MissingLetterGame extends BaseGame {
 
         this.currentScore += 10;
 
-        feedback.textContent = 'Правильно! +10 очков';
-        feedback.className = 'feedback-message correct-feedback';
+        feedback.textContent = 'Правильно!';
+        feedback.className = 'feedback correct';
         this.levelCompleted = true;
 
         setTimeout(() => {
@@ -83,8 +83,8 @@ class MissingLetterGame extends BaseGame {
 
     handleIncorrectAnswer(feedback, input) {
         this.currentScore = Math.max(0, this.currentScore - 2);
-        feedback.textContent = 'Неверно! Попробуйте еще раз (-2 очка)';
-        feedback.className = 'feedback incorrect-feedback';
+        feedback.textContent = 'Попробуйте еще раз';
+        feedback.className = 'feedback incorrect';
         input.value = '';
         input.focus();
     }
@@ -107,7 +107,6 @@ class MissingLetterGame extends BaseGame {
 }
 
 // Инициализация
-console.log('Initializing game...');
 document.addEventListener('DOMContentLoaded', () => {
     new MissingLetterGame();
 });

@@ -137,7 +137,7 @@
 
     .letter.missing {
         color: #e74c3c;
-        text-decoration: underline;
+        /* text-decoration: underline; */
     }
 
     .input-group {
@@ -152,7 +152,7 @@
         height: 60px;
         font-size: 2rem;
         text-align: center;
-        text-transform: uppercase;
+        /* text-transform: uppercase; */
         border: 3px solid #3498db;
         border-radius: 10px;
         outline: none;
