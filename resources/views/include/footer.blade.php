@@ -14,7 +14,7 @@
                  <ul>
                      <li><a href="{{ route('home') }}">Главная</a></li>
                      <li><a href="{{ route('about') }}">О нас</a></li>
-                     <li><a href="{{ route('courses') }}">Курсы</a></li>
+                     <li><a href="{{ route('alphabet') }}">Курсы</a></li>
                  </ul>
              </nav>
 

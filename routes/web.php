@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Dictionary;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GameController;
+
 
 
 // Главная страница
@@ -16,9 +18,12 @@ Route::get('/about', function () {
 })->name('about');
 
 // Страница "Курсы"
-Route::get('/courses', function () {
-    return view('courses'); // Создайте Blade-шаблон 'courses.blade.php'
-})->name('courses');
+Route::get('/alphabet', function () {
+    return view('alphabet.index'); // Создайте Blade-шаблон 'courses.blade.php'
+})->name('alphabet');
+
+
+Route::get('/dictionary', [Dictionary::class, 'index'])->name('dictionary');
 
 
 

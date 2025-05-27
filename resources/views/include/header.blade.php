@@ -9,7 +9,8 @@
             <ul class="header__menu">
                 <li><a href="{{ route('home') }}" class="menu-item">Главная</a></li>
                 <li><a href="{{ route('about') }}" class="menu-item">О нас</a></li>
-                <li><a href="{{ route('courses') }}" class="menu-item">Курсы</a></li>
+                <li><a href="{{ route('alphabet') }}" class="menu-item">Алфавит</a></li>
+                <li><a href="{{ route('dictionary') }}" class="menu-item">Словарь</a></li>
             </ul>
         </nav>
         <div class="header__auth">
