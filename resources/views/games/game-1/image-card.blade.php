@@ -52,6 +52,7 @@
         }
 
         .level-image-container {
+            display: flex;
             margin-bottom: 20px;
             border-radius: 12px;
             overflow: hidden;
@@ -61,6 +62,7 @@
         }
 
         .level-image {
+            object-fit: cover;
             width: 100%;
             display: block;
             transition: transform 0.3s ease;

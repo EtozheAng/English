@@ -8,7 +8,7 @@
         <nav class="header__nav">
             <ul class="header__menu">
                 <li><a href="{{ route('home') }}" class="menu-item">Главная</a></li>
-                <li><a href="{{ route('about') }}" class="menu-item">О нас</a></li>
+                <li><a href="{{ route('games') }}" class="menu-item">Игры</a></li>
                 <li><a href="{{ route('alphabet') }}" class="menu-item">Алфавит</a></li>
                 <li><a href="{{ route('dictionary') }}" class="menu-item">Словарь</a></li>
             </ul>

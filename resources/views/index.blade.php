@@ -19,6 +19,24 @@
                     <a href="{{ route('register') }}" class="hero__cta">Зарегистрироваться</a>
                 </div>
             </div>
+            <div class="cloud"></div>
+        </section>
+
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-text">
+                    <h2>Учим английский весело!</h2>
+                    <p>
+                        Наш сайт помогает детям легко и с интересом изучать английский язык.
+                        Игры, красочные карточки делают обучение увлекательным!
+                        Подходит для детей от 3 до 10 лет.
+                    </p>
+                    <a href="#" class="start-button">Начать учиться</a>
+                </div>
+                <div class="about-image">
+                    <img src="/images/banner/i.webp" alt="Дети учат английский">
+                </div>
+            </div>
         </section>
 
         <!-- Секция с особенностями -->
@@ -27,27 +45,22 @@
                 <h2 class="features-section__title">Что мы предлагаем?</h2>
                 <div class="features-section__list">
                     <div class="features-section__item">
-                        <h3 class="features-section__item-title">Интерактивные уроки</h3>
-                        <p class="features-section__item-description">Уроки с элементами игры и тестирования для детей,
-                            которые
-                            сделают обучение веселым!</p>
+                        <h3 class="features-section__item-title"> Интерактивые задания</h3>
+                        <p class="features-section__item-description">Игры, которые сделают обучение
+                            веселым!</p>
                         <a class="features-section__link" href="{{ route('games') }}"></a>
                     </div>
                     <div class="features-section__item">
-                        <h3 class="features-section__item-title">Задания и викторины</h3>
-                        <p class="features-section__item-description">Увлекательные задания и викторины, которые помогут
-                            закрепить
-                            материал и проверить свои знания.</p>
-                    </div>
-                    <div class="features-section__item">
-                        <h3 class="features-section__item-title">Прогресс и достижения</h3>
-                        <p class="features-section__item-description">Следите за своим прогрессом и получайте достижения
+                        <h3 class="features-section__item-title">Прогресс</h3>
+                        <p class="features-section__item-description">Следите за своим прогрессом и получайте баллы
                             за успешное
                             прохождение уроков.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+
 
 
     </main>

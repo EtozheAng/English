@@ -54,6 +54,7 @@
         }
 
         .level-image-container {
+            display: flex;
             margin-bottom: 20px;
             border-radius: 12px;
             overflow: hidden;
@@ -63,6 +64,7 @@
         }
 
         .level-image {
+            object-fit: cover;
             width: 100%;
             display: block;
             transition: transform 0.3s ease;
@@ -74,7 +76,7 @@
 
         .words-grid {
             /* display: grid;
-                                                                                                                                grid-template-columns: repeat(2, 1fr); */
+                                                                                                                                    grid-template-columns: repeat(2, 1fr); */
             display: flex;
             flex-wrap: wrap;
             gap: 12px;

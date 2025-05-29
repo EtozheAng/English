@@ -9,7 +9,7 @@
         <div class="features grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Первая игра -->
             <div class="feature">
-                <h3 class="feature__title">Интерактивные уроки</h3>
+                <h3 class="feature__title">Игра 1</h3>
                 <p class="feature__description">
                     Уроки с элементами игры и тестирования для детей, которые сделают обучение веселым!
                 </p>
@@ -18,7 +18,7 @@
 
             <!-- Вторая игра -->
             <div class="feature">
-                <h3 class="feature__title">Математические головоломки</h3>
+                <h3 class="feature__title">Игра 2</h3>
                 <p class="feature__description">
                     Развивающие игры для тренировки математических навыков с увлекательными задачами.
                 </p>
@@ -27,7 +27,7 @@
 
             <!-- Третья игра -->
             <div class="feature">
-                <h3 class="feature__title">Логические игры</h3>
+                <h3 class="feature__title">Игра 3</h3>
                 <p class="feature__description">
                     Игры для тренировки логического мышления и решения задач с элементами стратегии.
                 </p>
