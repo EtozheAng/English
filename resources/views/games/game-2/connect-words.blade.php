@@ -50,181 +50,215 @@
     </div>
 
     <script>
-        const levelsData = @json($levels);
-        let currentLevel = 0;
-        let score = 0;
-        let correctPairs = {};
-        let selectedEnglishWord = null;
-        let selectedRussianWord = null;
-        let mistakesCount = 0;
+        class WordMatchingGame {
+            constructor(levelsData) {
+                this.levelsData = levelsData;
+                this.currentLevel = 0;
+                this.score = 0;
+                this.bestScoreKey = `bestScore_word-matching`; // Ключ для localStorage
+                this.bestScore = parseInt(localStorage.getItem(this.bestScoreKey)) || 0;
+                this.correctPairs = {};
+                this.selectedEnglishWord = null;
+                this.selectedRussianWord = null;
+                this.mistakesCount = 0;
 
-        // Выбор уровня
-        document.querySelectorAll('.level-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                currentLevel = parseInt(this.dataset.level) - 1;
-                startLevel(currentLevel);
-            });
-        });
-
-        // Кнопка "Продолжить"
-        document.getElementById('next-level-btn').addEventListener('click', function() {
-            if (currentLevel + 1 < levelsData.length) {
-                currentLevel++;
-                startLevel(currentLevel);
-            } else {
-                // Все уровни пройдены
-                document.querySelector('.game-area').classList.add('hidden');
-                document.querySelector('.level-selection').classList.remove('hidden');
+                this.initElements();
+                this.bindEvents();
             }
-        });
 
-        // Кнопка "Выбрать уровень"
-        document.getElementById('select-level-btn').addEventListener('click', function() {
-            document.querySelector('.game-area').classList.add('hidden');
-            document.querySelector('.level-selection').classList.remove('hidden');
-        });
+            initElements() {
+                this.elements = {
+                    levelButtons: document.querySelectorAll('.level-btn'),
+                    nextLevelBtn: document.getElementById('next-level-btn'),
+                    selectLevelBtn: document.getElementById('select-level-btn'),
+                    currentLevelDisplay: document.getElementById('current-level'),
+                    gameArea: document.querySelector('.game-area'),
+                    levelSelection: document.querySelector('.level-selection'),
+                    gameResult: document.querySelector('.game-result'),
+                    englishWordsList: document.getElementById('english-words-list'),
+                    russianWordsList: document.getElementById('russian-words-list'),
+                    finalScore: document.getElementById('final-score'),
+                    messageArea: document.querySelector('.message-area')
+                };
+            }
 
-        function startLevel(levelIndex) {
-            const level = levelsData[levelIndex];
-            document.getElementById('current-level').textContent = levelIndex + 1;
-            document.querySelector('.game-area').classList.remove('hidden');
-            document.querySelector('.level-selection').classList.add('hidden');
-            document.querySelector('.game-result').classList.add('hidden');
-            score = 0;
-            mistakesCount = 0;
-            selectedEnglishWord = null;
-            selectedRussianWord = null;
-
-            // Перемешиваем слова
-            const shuffledEnglish = [...level.englishWords].sort(() => Math.random() - 0.5);
-            const shuffledRussian = [...level.russianWords].sort(() => Math.random() - 0.5);
-
-            // Отображаем слова
-            const englishList = document.getElementById('english-words-list');
-            const russianList = document.getElementById('russian-words-list');
-
-            englishList.innerHTML = '';
-            russianList.innerHTML = '';
-
-            // Обработчики для английских слов
-            shuffledEnglish.forEach(word => {
-                const li = document.createElement('li');
-                li.textContent = word;
-                li.classList.add('word-item');
-                li.dataset.word = word;
-                li.addEventListener('click', function() {
-                    // Сбрасываем предыдущее выделение
-                    document.querySelectorAll('#english-words-list .word-item').forEach(item => {
-                        item.classList.remove('selected');
+            bindEvents() {
+                // Выбор уровня
+                this.elements.levelButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.currentLevel = parseInt(btn.dataset.level) - 1;
+                        this.startLevel(this.currentLevel);
                     });
+                });
 
-                    // Выделяем новое слово
-                    selectedEnglishWord = word;
-                    li.classList.add('selected');
-
-                    // Если уже выбрано русское слово - проверяем пару
-                    if (selectedRussianWord) {
-                        checkPair();
+                // Кнопка "Продолжить"
+                this.elements.nextLevelBtn.addEventListener('click', () => {
+                    if (this.currentLevel + 1 < this.levelsData.length) {
+                        this.currentLevel++;
+                        this.startLevel(this.currentLevel);
+                    } else {
+                        this.showLevelSelection();
                     }
                 });
-                englishList.appendChild(li);
-            });
 
-            // Обработчики для русских слов
-            shuffledRussian.forEach(word => {
-                const li = document.createElement('li');
-                li.textContent = word;
-                li.classList.add('word-item');
-                li.dataset.word = word;
-                li.addEventListener('click', function() {
-                    // Сбрасываем предыдущее выделение
-                    document.querySelectorAll('#russian-words-list .word-item').forEach(item => {
-                        item.classList.remove('selected');
+                // Кнопка "Выбрать уровень"
+                this.elements.selectLevelBtn.addEventListener('click', () => {
+                    this.showLevelSelection();
+                });
+            }
+
+            startLevel(levelIndex) {
+                const level = this.levelsData[levelIndex];
+                this.resetGameState(levelIndex);
+                this.correctPairs = level.correctPairs;
+
+                this.displayWords(level);
+                this.showGameArea();
+            }
+
+            resetGameState(levelIndex) {
+                this.elements.currentLevelDisplay.textContent = levelIndex + 1;
+                this.score = 0;
+                this.mistakesCount = 0;
+                this.selectedEnglishWord = null;
+                this.selectedRussianWord = null;
+                this.elements.englishWordsList.innerHTML = '';
+                this.elements.russianWordsList.innerHTML = '';
+                this.elements.gameResult.classList.add('hidden');
+            }
+
+            displayWords(level) {
+                const shuffledEnglish = [...level.englishWords].sort(() => Math.random() - 0.5);
+                const shuffledRussian = [...level.russianWords].sort(() => Math.random() - 0.5);
+
+                this.createWordElements(shuffledEnglish, this.elements.englishWordsList, 'english');
+                this.createWordElements(shuffledRussian, this.elements.russianWordsList, 'russian');
+            }
+
+            createWordElements(words, container, language) {
+                container.innerHTML = '';
+
+                words.forEach(word => {
+                    const li = document.createElement('li');
+                    li.textContent = word;
+                    li.classList.add('word-item');
+                    li.dataset.word = word;
+
+                    li.addEventListener('click', () => {
+                        this.handleWordSelection(word, language);
                     });
 
-                    // Выделяем новое слово
-                    selectedRussianWord = word;
-                    li.classList.add('selected');
-
-                    // Если уже выбрано английское слово - проверяем пару
-                    if (selectedEnglishWord) {
-                        checkPair();
-                    }
+                    container.appendChild(li);
                 });
-                russianList.appendChild(li);
-            });
+            }
 
-            // Сохраняем правильные пары
-            correctPairs = level.correctPairs;
-        }
+            handleWordSelection(word, language) {
+                // Сбрасываем предыдущее выделение
+                const listId = `${language}-words-list`;
+                document.querySelectorAll(`#${listId} .word-item`).forEach(item => {
+                    item.classList.remove('selected');
+                });
 
-        function checkPair() {
-            const englishWordElement = document.querySelector(`#english-words-list [data-word="${selectedEnglishWord}"]`);
-            const russianWordElement = document.querySelector(`#russian-words-list [data-word="${selectedRussianWord}"]`);
+                // Выделяем новое слово
+                if (language === 'english') {
+                    this.selectedEnglishWord = word;
+                } else {
+                    this.selectedRussianWord = word;
+                }
 
-            // Проверяем правильность пары
-            if (correctPairs[selectedEnglishWord] === selectedRussianWord) {
-                // Правильный ответ
-                showMessage('Правильно!', 'success');
+                document.querySelector(`#${listId} [data-word="${word}"]`).classList.add('selected');
 
-                // Подсвечиваем правильные слова
-                englishWordElement.classList.add('correct');
-                russianWordElement.classList.add('correct');
+                // Если выбраны оба слова - проверяем пару
+                if (this.selectedEnglishWord && this.selectedRussianWord) {
+                    this.checkPair();
+                }
+            }
 
-                // Удаляем слова после задержки
+            checkPair() {
+                const englishWordElement = this.getWordElement(this.selectedEnglishWord, 'english');
+                const russianWordElement = this.getWordElement(this.selectedRussianWord, 'russian');
+
+                if (this.correctPairs[this.selectedEnglishWord] === this.selectedRussianWord) {
+                    this.handleCorrectPair(englishWordElement, russianWordElement);
+                } else {
+                    this.handleWrongPair(englishWordElement, russianWordElement);
+                }
+            }
+
+            getWordElement(word, language) {
+                return document.querySelector(`#${language}-words-list [data-word="${word}"]`);
+            }
+
+            handleCorrectPair(englishElement, russianElement) {
+                this.showMessage('Правильно!', 'success');
+
+                englishElement.classList.add('correct');
+                russianElement.classList.add('correct');
+
                 setTimeout(() => {
-                    englishWordElement.remove();
-                    russianWordElement.remove();
+                    englishElement.remove();
+                    russianElement.remove();
 
-                    // Сбрасываем выделение
-                    selectedEnglishWord = null;
-                    selectedRussianWord = null;
+                    this.selectedEnglishWord = null;
+                    this.selectedRussianWord = null;
 
-                    // Проверяем завершение уровня
-                    if (document.getElementById('english-words-list').children.length === 0) {
-                        completeLevel();
+                    if (this.elements.englishWordsList.children.length === 0) {
+                        this.completeLevel();
                     }
                 }, 500);
-            } else {
-                // Неправильный ответ
-                showMessage('Неверно', 'error');
-                mistakesCount++;
+            }
 
-                // Подсвечиваем неправильные слова
-                englishWordElement.classList.add('wrong');
-                russianWordElement.classList.add('wrong');
+            handleWrongPair(englishElement, russianElement) {
+                this.showMessage('Неверно', 'error');
+                this.mistakesCount++;
 
-                // Сбрасываем выделение через секунду
+                englishElement.classList.add('wrong');
+                russianElement.classList.add('wrong');
+
                 setTimeout(() => {
-                    englishWordElement.classList.remove('selected', 'wrong');
-                    russianWordElement.classList.remove('selected', 'wrong');
-                    selectedEnglishWord = null;
-                    selectedRussianWord = null;
+                    englishElement.classList.remove('selected', 'wrong');
+                    russianElement.classList.remove('selected', 'wrong');
+                    this.selectedEnglishWord = null;
+                    this.selectedRussianWord = null;
                 }, 1000);
             }
-        }
 
-        function completeLevel() {
-            // Рассчитываем итоговый счет
-            if (mistakesCount === 0) {
-                score = 20; // Максимальный балл без ошибок
-            } else {
-                score = Math.max(15, 20 - mistakesCount); // Минимум 15 очков
+            completeLevel() {
+                this.score = this.mistakesCount === 0 ? 20 : Math.max(15, 20 - this.mistakesCount);
+
+                this.elements.finalScore.textContent = this.score;
+                this.elements.gameResult.classList.remove('hidden');
+
+                const isNewRecord = this.score > this.bestScore;
+                if (isNewRecord) {
+                    this.bestScore = this.score;
+                    localStorage.setItem(this.bestScoreKey, this.bestScore);
+                }
             }
 
-            document.getElementById('final-score').textContent = score;
-            document.querySelector('.game-result').classList.remove('hidden');
+            showMessage(text, type) {
+                this.elements.messageArea.innerHTML = `<div class="message ${type}">${text}</div>`;
+
+                setTimeout(() => {
+                    this.elements.messageArea.innerHTML = '';
+                }, 2000);
+            }
+
+            showGameArea() {
+                this.elements.gameArea.classList.remove('hidden');
+                this.elements.levelSelection.classList.add('hidden');
+            }
+
+            showLevelSelection() {
+                this.elements.gameArea.classList.add('hidden');
+                this.elements.levelSelection.classList.remove('hidden');
+            }
         }
 
-        function showMessage(text, type) {
-            const messageArea = document.querySelector('.message-area');
-            messageArea.innerHTML = `<div class="message ${type}">${text}</div>`;
-
-            // Автоматически скрываем сообщение
-            setTimeout(() => {
-                messageArea.innerHTML = '';
-            }, 2000);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const levelsData = @json($levels);
+            const game = new WordMatchingGame(levelsData);
+        });
     </script>
 
     <style>

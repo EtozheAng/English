@@ -1,9 +1,7 @@
 @extends('layouts.home')
 
-@section('title', 'Игры для детей')
 
 @section('content')
-
     <main class="content">
         <!-- Герой-секция -->
         <section class="hero">

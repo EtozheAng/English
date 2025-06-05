@@ -2,7 +2,6 @@
 
 @section('title', 'Игры для детей')
 
-{{-- @vite(['resources/js/images-card.js']) --}}
 @vite(['resources/js/image-card-game.js'])
 
 @section('content')

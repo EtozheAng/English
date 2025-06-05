@@ -70,13 +70,27 @@
             transition: transform 0.3s ease;
         }
 
+        .letter {
+            width: 40px;
+            height: 40px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
         .level-image:hover {
             transform: scale(1.02);
         }
 
         .words-grid {
             /* display: grid;
-                                                                                                                                    grid-template-columns: repeat(2, 1fr); */
+                                                                                                                                                                grid-template-columns: repeat(2, 1fr); */
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
@@ -152,6 +166,18 @@
             margin: 15px 0;
         }
 
+        .answer-area {
+            min-height: 50px;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+
         .action-buttons {
             display: none;
             justify-content: center;
@@ -219,6 +245,13 @@
             border-radius: 8px;
         }
 
+        .letters-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
 
         /* Адаптивность */
         @media (max-width: 576px) {
@@ -249,18 +282,13 @@
                         <img src="{{ asset($level['image']) }}" alt="{{ $level['correct_word'] }}" class="level-image">
                     </div>
 
-                    <!-- Область для составления слова -->
-                    <div class="answer-area" id="answer-area-{{ $index }}"
-                        style="min-height: 50px; border: 2px dashed #3498db; border-radius: 8px; padding: 10px; margin: 20px 0; display: flex; flex-wrap: wrap; gap: 5px; align-items: center;">
-                        <!-- Сюда будут добавляться буквы по клику -->
+                    <div class="answer-area" id="answer-area-{{ $index }}">
+
                     </div>
 
-                    <!-- Буквы для выбора -->
-                    <div class="letters-grid"
-                        style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px;">
+                    <div class="letters-grid">
                         @foreach ($level['separate'] as $letter)
-                            <div class="letter" data-letter="{{ $letter }}"
-                                style="width: 40px; height: 40px; background-color: #3498db; color: white; display: flex; align-items: center; justify-content: center; border-radius: 5px; font-size: 1.2rem; cursor: pointer; user-select: none;">
+                            <div class="letter" data-letter="{{ $letter }}">
                                 {{ $letter }}
                             </div>
                         @endforeach
@@ -285,99 +313,3 @@
         </div>
     </div>
 @endsection
-
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Инициализация всех уровней
-        document.querySelectorAll('.level').forEach(level => {
-            const answerArea = level.querySelector('.answer-area');
-            const lettersGrid = level.querySelector('.letters-grid');
-            const checkButton = level.querySelector('.check-answer');
-            const feedback = level.querySelector('.feedback-message');
-            const correctWord = level.querySelector('.level-image').alt.toLowerCase();
-
-            // Обработчик клика для букв в исходной сетке
-            lettersGrid.addEventListener('click', function(e) {
-                if (e.target.classList.contains('letter')) {
-                    moveLetterToAnswer(e.target, level);
-                }
-            });
-
-            // Обработчик клика для букв в области ответа
-            answerArea.addEventListener('click', function(e) {
-                if (e.target.classList.contains('letter')) {
-                    moveLetterBack(e.target, level);
-                }
-            });
-
-            // Функция перемещения буквы в область ответа
-            function moveLetterToAnswer(letter, level) {
-                const answerArea = level.querySelector('.answer-area');
-                const clonedLetter = letter.cloneNode(true);
-
-                clonedLetter.style.backgroundColor = '#9b59b6';
-                answerArea.appendChild(clonedLetter);
-                letter.style.visibility = 'hidden';
-
-                // Автопроверка при наборе нужного количества букв
-                if (answerArea.children.length === correctWord.length) {
-                    checkAnswer(level);
-                }
-            }
-
-            // Функция возврата буквы обратно
-            function moveLetterBack(letter, level) {
-                const lettersGrid = level.querySelector('.letters-grid');
-                const originalLetter = lettersGrid.querySelector(
-                    `[data-letter="${letter.dataset.letter}"][style*="visibility: hidden"]`);
-
-                if (originalLetter) {
-                    originalLetter.style.visibility = 'visible';
-                }
-                letter.remove();
-            }
-
-            // Функция проверки ответа
-            function checkAnswer(level) {
-                const answerArea = level.querySelector('.answer-area');
-                let userAnswer = '';
-
-                Array.from(answerArea.children).forEach(letter => {
-                    userAnswer += letter.dataset.letter.toLowerCase();
-                });
-
-                if (userAnswer === correctWord) {
-                    feedback.innerHTML =
-                        `<span class="correct-feedback">Правильно! Это слово "${correctWord}"</span>`;
-                    feedback.style.display = 'block';
-
-                    // Переход к следующему уровню
-                    setTimeout(() => {
-                        const nextLevel = level.nextElementSibling;
-                        if (nextLevel && nextLevel.classList.contains('level')) {
-                            level.classList.remove('active');
-                            nextLevel.classList.add('active');
-                        } else {
-                            document.getElementById('results').style.display = 'block';
-                            document.querySelector('.action-buttons').style.display = 'flex';
-                        }
-                    }, 1500);
-                } else {
-                    feedback.innerHTML =
-                        `<span class="incorrect-feedback">Неверно. Попробуйте еще раз</span>`;
-                    feedback.style.display = 'block';
-
-                    // Подсветка ошибки
-                    answerArea.style.borderColor = '#e74c3c';
-                    setTimeout(() => {
-                        answerArea.style.borderColor = '#3498db';
-                    }, 1000);
-                }
-            }
-        });
-
-        // Обработчики для кнопок действий
-        document.querySelector('.restart-btn')?.addEventListener('click', () => location.reload());
-        document.querySelector('.home-btn')?.addEventListener('click', () => window.location.href = '/');
-    });
-</script> --}}

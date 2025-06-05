@@ -13,7 +13,7 @@ class GameController extends Controller
     // game 1
     public function gameOneSections()
     {
-        $gameData = $this->gatGameData();
+        $gameData = $this->getGameData();
         $categories = array_map(function($section) {
             return [
                 'icon' => $section['icon'],
@@ -28,7 +28,7 @@ class GameController extends Controller
     }
     public function gameOneImageCard($section = null)
     {
-        $categories = $this->gatGameData();
+        $categories = $this->getGameData();
 
         // Если раздел не указан или не существует - перенаправляем
         if (!$section || !array_key_exists($section, $categories)) {
@@ -48,7 +48,7 @@ class GameController extends Controller
             'sectionTitle' => $selectedCategory['title'],
         ]);
     }
-    private function gatGameData() {
+    private function getGameData() {
         $categories = [
             'fruits' => [
                 'icon' => '🍎',
@@ -214,7 +214,7 @@ class GameController extends Controller
 
     // game 3
     public function createWordsSections () {
-        $gameData = $this->gatGameData();
+        $gameData = $this->getGameData();
         $categories = array_map(function($section) {
             return [
                 'icon' => $section['icon'],
@@ -230,7 +230,7 @@ class GameController extends Controller
 
     public function createWords($section = null)
     {
-        $categories = $this->gatGameData();
+        $categories = $this->getGameData();
 
         // Если раздел не указан или не существует - перенаправляем
         if (!$section || !array_key_exists($section, $categories)) {
@@ -255,7 +255,7 @@ class GameController extends Controller
     //game 4
     public function gameFourSections()
     {
-        $gameData = $this->gatGameData();
+        $gameData = $this->getGameData();
         $categories = array_map(function($section) {
             return [
                 'icon' => $section['icon'],
@@ -270,7 +270,7 @@ class GameController extends Controller
     }
     public function gameFourCard(Request $request, $section = null)
     {
-        $categories = $this->gatGameData();
+        $categories = $this->getGameData();
 
         // Если раздел не указан или не существует - перенаправляем
         if (!$section || !array_key_exists($section, $categories)) {

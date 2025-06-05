@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
-    @vite('resources/js/app.js') <!-- Вставляем скомпилированные скрипты и стили через Vite -->
+    <title> @yield('title', 'Английский для детей')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite('resources/js/app.js')
 </head>
 
 <body>

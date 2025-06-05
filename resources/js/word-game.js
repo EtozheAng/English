@@ -97,6 +97,9 @@ class WordGame extends BaseGame {
     }
 
     handleIncorrectAnswer(answerArea) {
+        if (!this.currentScore) {
+            this.currentScore += 10;
+        }
         this.currentScore = Math.max(0, this.currentScore - 2);
         const feedback = answerArea.closest('.level').querySelector('.feedback-message');
         feedback.textContent = 'Попробуй еще раз! ❌';

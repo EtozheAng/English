@@ -5,12 +5,6 @@
 @use 'components/header'; // Импорт стилей header
 @use 'components/footer'; // Импорт стилей footer
 
-// Основные переменные
-$primary-color: #3490dc;
-$secondary-color: #38c172;
-$background-color: #f8fafc;
-$text-color: #2d3748;
-
 
 // Стили для секции с особенностями
 .features-section {
