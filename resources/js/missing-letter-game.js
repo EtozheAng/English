@@ -82,9 +82,6 @@ class MissingLetterGame extends BaseGame {
     }
 
     handleIncorrectAnswer(feedback, input) {
-        if (!this.currentScore) {
-            this.currentScore += 10;
-        }
         this.currentScore = Math.max(0, this.currentScore - 2);
         feedback.textContent = 'Попробуйте еще раз';
         feedback.className = 'feedback incorrect';

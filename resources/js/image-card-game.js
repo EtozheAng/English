@@ -29,7 +29,6 @@ class ImageCardGame extends BaseGame {
         this.disableAllOptions(level);
         this.currentScore += 10;
         console.log(this.currentScore)
-
         const feedback = level.querySelector('.feedback-message');
         feedback.textContent = 'Правильно! 🎉';
         feedback.className = 'feedback-message correct-feedback';
@@ -41,9 +40,6 @@ class ImageCardGame extends BaseGame {
 
     handleIncorrectAnswer(option, level) {
         option.classList.add('incorrect');
-        if (!this.currentScore) {
-            this.currentScore += 10;
-        }
         this.currentScore = Math.max(0, this.currentScore - 2);
 
         const feedback = level.querySelector('.feedback-message');

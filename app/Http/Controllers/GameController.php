@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Arr;
+use App\Models\GameResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -118,14 +120,19 @@ class GameController extends Controller
                         'words' => ['Car', 'Bus', 'Truck', 'Bicycle']
                     ],
                     [
-                        'image' => 'images/vehicles/bus.jpg',
+                        'image' => 'images/vehicles/bus.webp',
                         'correct_word' => 'Bus',
                         'words' => ['Bus', 'Train', 'Tram', 'Metro']
                     ],
                     [
-                        'image' => 'images/vehicles/airplane.jpg',
+                        'image' => 'images/vehicles/airplane.webp',
                         'correct_word' => 'Airplane',
                         'words' => ['Airplane', 'Helicopter', 'Rocket', 'Balloon']
+                    ],
+                    [
+                        'image' => 'images/vehicles/truck.webp',
+                        'correct_word' => 'Truck',
+                        'words' => ['Bus', 'Truck', 'Bicycle', 'Balloon']
                     ]
                 ]
             ]

@@ -54,13 +54,45 @@ export class BaseGame {
         }
     }
 
-    showFinalResults() {
+    async showFinalResults() {
         const duration = this.getGameDuration();
         const isNewRecord = this.currentScore > this.bestScore;
 
+        // Извлекаем последнюю часть URL (например, "fruits" из "/games/image-card/fruits")
+        const pathParts = window.location.pathname.split('/');
+        const section = pathParts[pathParts.length - 1]; // Получаем последний элемент массива
         if (isNewRecord) {
-            this.bestScore = this.currentScore;
-            localStorage.setItem(this.bestScoreKey, this.bestScore);
+            try {
+                // Отправляем данные на сервер Laravel
+                const response = await fetch('/api/save-score', {
+                    method: 'POST',
+                    credentials: 'include', // Важно!
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'X-Requested-With': 'XMLHttpRequest' // Важно!
+                    },
+                    body: JSON.stringify({
+                        score: this.currentScore,
+                        game_type: this.gameId,
+                        section: section
+                    })
+                });
+
+                if (response.ok) {
+                    // const data = await response.json();
+                    this.bestScore = this.currentScore; // Обновляем лучший счет из ответа сервера
+                    localStorage.setItem(this.bestScoreKey, this.currentScore);
+                } else {
+                    console.error('Ошибка при сохранении результата');
+                    localStorage.setItem(this.bestScoreKey, this.currentScore);
+                }
+            } catch (error) {
+                console.error('Ошибка сети:', error);
+                localStorage.setItem(this.bestScoreKey, this.currentScore);
+            }
+        } else {
+            this.bestScore = localStorage.getItem(this.bestScoreKey);
         }
 
         document.getElementById('results').innerHTML = this.generateResultsHTML(duration, isNewRecord);

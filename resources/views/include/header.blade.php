@@ -14,8 +14,16 @@
             </ul>
         </nav>
         <div class="header__auth">
-            <a href="{{ route('login') }}" class="auth-button">Войти</a>
-            <a href="{{ route('register') }}" class="auth-button">Зарегистрироваться</a>
+            @auth
+                <a href="{{ route('dashboard') }}" class="header__user-nickname">{{ Auth::user()->name }}</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="auth-button">Выйти</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="auth-button">Войти</a>
+                <a href="{{ route('register') }}" class="auth-button">Зарегистрироваться</a>
+            @endauth
         </div>
     </div>
 </header>

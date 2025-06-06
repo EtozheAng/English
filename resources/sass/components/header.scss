@@ -44,6 +44,7 @@ $text-color: #2d3748;
     &__auth {
         display: flex;
         gap: 1rem;
+        align-items: center;
 
         .auth-button {
             background-color: transparent;
@@ -61,4 +62,17 @@ $text-color: #2d3748;
             }
         }
     }
+
+    &__user-nickname {
+        color: inherit;
+    }
+
+    .auth-button {
+        cursor: pointer;
+    }
+
+    form {
+        margin-bottom: 0;
+    }
+
 }

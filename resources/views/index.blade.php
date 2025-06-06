@@ -14,7 +14,11 @@
                             интерактивным урокам и играм.
                         </p>
                     </div>
-                    <a href="{{ route('register') }}" class="hero__cta">Зарегистрироваться</a>
+                    @auth
+                        <a href="{{ route('dashboard') }}" class="hero__cta">Личный кабинет</a>
+                    @else
+                        <a href="{{ route('register') }}" class="hero__cta">Зарегистрироваться</a>
+                    @endauth
                 </div>
             </div>
             <div class="cloud"></div>

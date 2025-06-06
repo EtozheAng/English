@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\Dictionary;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScoreController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -43,9 +47,14 @@ Route::get('games/missing-letter-game/{section?}', [GameController::class, 'game
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth','verified'])->group(function() {
+    Route::get('/dashboard', [AchievementController::class, 'index'])->name('dashboard');
+});
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
