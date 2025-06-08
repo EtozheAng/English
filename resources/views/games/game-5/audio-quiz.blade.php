@@ -1,12 +1,10 @@
 @extends('layouts.home')
 
-@section('title', 'Игры для детей')
+@section('title', 'Аудиовикторина для детей')
 
-
-@vite(['resources/js/word-game.js'])
+@vite(['resources/js/audio-quiz.js'])
 
 @section('content')
-
     <style>
         .game-container {
             max-width: 600px;
@@ -52,52 +50,45 @@
             display: block;
         }
 
-        .level-image-container {
+        .audio-control {
             display: flex;
-            margin-bottom: 20px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            min-height: 330px;
+            justify-content: center;
+            margin-bottom: 45px;
         }
 
-        .level-image {
-            object-fit: cover;
-            width: 100%;
-            display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .letter {
-            width: 40px;
-            height: 40px;
+        .play-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             background-color: #3498db;
+            border: none;
             color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            user-select: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .level-image:hover {
-            transform: scale(1.02);
+        .play-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .play-button:active {
+            transform: scale(0.95);
         }
 
         .words-grid {
-            /* display: grid;
-                                                                                                                                                                                grid-template-columns: repeat(2, 1fr); */
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 20px;
         }
 
         .word-option {
-            flex: 1;
             padding: 15px;
             background-color: #3498db;
             color: white;
@@ -130,6 +121,7 @@
             font-size: 1.3rem;
             font-weight: bold;
             text-align: center;
+            /* min-height: 50px; */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -141,6 +133,14 @@
 
         .incorrect-feedback {
             color: #e74c3c;
+        }
+
+        .hint-image {
+            display: none;
+            max-height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .results-panel {
@@ -163,18 +163,6 @@
         .score-display {
             font-size: 1.2rem;
             margin: 15px 0;
-        }
-
-        .answer-area {
-            min-height: 50px;
-            border: 2px dashed #3498db;
-            border-radius: 8px;
-            padding: 10px;
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            align-items: center;
         }
 
         .action-buttons {
@@ -244,60 +232,54 @@
             border-radius: 8px;
         }
 
-        .letters-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 20px;
-        }
 
-        /* Адаптивность */
         @media (max-width: 576px) {
             .words-grid {
                 grid-template-columns: 1fr;
             }
 
-            .level {
-                padding: 20px 15px;
-            }
-
-            .word-option {
-                padding: 12px;
+            .play-button {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
             }
         }
     </style>
 
     <div class="game-container">
         <div class="game-header">
-            <h1 class="game-title">Составьте слово из букв</h1>
+            <h1 class="game-title">Угадай по звуку</h1>
         </div>
 
         <!-- Уровни игры -->
         <div class="levels-wrapper">
             @foreach ($levels as $index => $level)
-                <div class="level {{ $index === 0 ? 'active' : '' }}" data-level="{{ $index }}"">
-                    <div class="level-image-container">
-                        <img src="{{ asset($level['image']) }}" alt="{{ $level['correct_word'] }}" class="level-image">
+                <div class="level {{ $index === 0 ? 'active' : '' }}" data-level="{{ $index }}">
+                    <div class="audio-control">
+                        <button class="play-button" data-audio="{{ asset($level['sound']) }}">
+                            ▶
+                        </button>
                     </div>
 
-                    <div class="answer-area" id="answer-area-{{ $index }}">
+                    @if (isset($level['image']))
+                        <img src="{{ asset($level['image']) }}" alt="Подсказка" class="hint-image">
+                    @endif
 
-                    </div>
-
-                    <div class="letters-grid">
-                        @foreach ($level['separate'] as $letter)
-                            <div class="letter" data-letter="{{ $letter }}">
-                                {{ $letter }}
-                            </div>
+                    <div class="words-grid">
+                        @foreach ($level['words'] as $word)
+                            <button class="word-option"
+                                data-correct="{{ $word === $level['correct_word'] ? 'true' : 'false' }}">
+                                {{ $word }}
+                            </button>
                         @endforeach
                     </div>
+
                     <div class="feedback-message" id="message-{{ $index }}"></div>
                 </div>
             @endforeach
         </div>
 
-        <!-- Панель результатов -->
+        <!-- Панель результатов (остается как в оригинале) -->
         <div class="results-panel" id="results">
             <h2 class="results-title">Результаты</h2>
             <div class="score-display">
@@ -305,10 +287,12 @@
             </div>
         </div>
 
-        <!-- Кнопки действий -->
+        <!-- Кнопки действий (остаются как в оригинале) -->
         <div class="action-buttons">
             <button class="action-btn restart-btn">Начать заново</button>
             <button class="action-btn home-btn">Вернуться на главную</button>
         </div>
     </div>
+
+    <audio id="audio-player"></audio>
 @endsection

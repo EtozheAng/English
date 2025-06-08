@@ -85,10 +85,12 @@ export class BaseGame {
                     localStorage.setItem(this.bestScoreKey, this.currentScore);
                 } else {
                     console.error('Ошибка при сохранении результата');
+                    this.bestScore = this.currentScore; // Обновляем лучший счет из ответа сервера
                     localStorage.setItem(this.bestScoreKey, this.currentScore);
                 }
             } catch (error) {
                 console.error('Ошибка сети:', error);
+                this.bestScore = this.currentScore;
                 localStorage.setItem(this.bestScoreKey, this.currentScore);
             }
         } else {

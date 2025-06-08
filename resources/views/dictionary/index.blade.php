@@ -22,10 +22,14 @@
                     <h2 class="letter-title">{{ $letter }}</h2>
                     <div class="words-list">
                         @foreach ($letterWords['items'] as $item)
-                            <div class="word-card">
-                                <div class="word-en">{{ $item['en'] }}</div>
+                            <button class="word-card play-sound" data-sound="{{ $item['sound'] }}">
+                                <div class="word-en">{{ $item['en'] }}
+                                    @if (isset($item['sound']))
+                                        <i class="fas fa-volume-up">🔊</i>
+                                    @endif
+                                </div>
                                 <div class="word-ru">{{ $item['ru'] }}</div>
-                            </div>
+                            </button>
                         @endforeach
                     </div>
                 </div>
@@ -36,6 +40,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Фильтрация по буквам
         document.querySelectorAll('.letter-filter').forEach(btn => {
             btn.addEventListener('click', () => {
                 const letter = btn.dataset.letter;
@@ -45,7 +50,18 @@
                 });
             });
         });
-    })
+
+        // Воспроизведение звука
+        document.querySelectorAll('.play-sound').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const soundFile = btn.dataset.sound;
+                const audio = new Audio(soundFile);
+                audio.play().catch(e => console.error("Ошибка воспроизведения:", e));
+
+            });
+        });
+    });
 </script>
 
 <style>
@@ -59,8 +75,10 @@
 
     .page-title {
         color: #ff6b6b;
-        text-align: center;
+        font-size: 2.5rem;
         margin-bottom: 30px;
+        text-shadow: 2px 2px 0px #fff;
+        text-align: center;
     }
 
     .alphabet-filter {
@@ -71,22 +89,35 @@
         margin-bottom: 20px;
     }
 
-    /* .letter-filter {
-        width: 40px;
-        height: 40px;
+    .play-sound {
+        background: none;
         border: none;
-        border-radius: 50%;
-        background: #74ebd5;
-        color: white;
-        font-weight: bold;
+        color: #4b5563;
         cursor: pointer;
-        transition: all 0.3s;
+        margin-left: 8px;
+        padding: 4px;
+        transition: all 0.2s;
     }
 
-    .letter-filter:hover {
-        background: #ACB6E5;
+    .play-sound:hover {
+        color: #3b82f6;
         transform: scale(1.1);
-    } */
+    }
+
+    .fa-spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
 
     .letter-section {
         margin-bottom: 30px;

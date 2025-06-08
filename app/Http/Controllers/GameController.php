@@ -60,24 +60,30 @@ class GameController extends Controller
                     [
                         'image' => 'images/fruits/apple.jpg',
                         'correct_word' => 'Apple',
-                        'words' => ['Apple', 'Banana', 'Orange', 'Pear']
+                        'translation' => 'Яблоко',
+                        'sound' => 'sounds/fruits/apple.mp3',
+                        'words' => ['Apple', 'Banana', 'Orange', 'Strawberry']
                     ],
                     [
                         'image' => 'images/fruits/banana.jpg',
                         'correct_word' => 'Banana',
+                        'translation' => 'Банан',
+                        'sound' => 'sounds/fruits/banana.mp3',
                         'words' => ['Banana', 'Apple', 'Grapes', 'Pineapple'],
                         
                     ],
                     [
                         'image' => 'images/fruits/orange.webp',
                         'correct_word' => 'Orange',
-                       
+                        'translation' => 'Апельсин',
+                        'sound' => 'sounds/fruits/orange.mp3',
                         'words' => ['Orange', 'Lemon', 'Kiwi', 'Mango']
                     ],
                     [
                         'image' => 'images/fruits/strawberry.webp',
                         'correct_word' => 'Strawberry',
-                       
+                        'translation' => 'Клубника',
+                        'sound' => 'sounds/fruits/strawberry.mp3',
                         'words' => ['Strawberry', 'Raspberry', 'Blueberry', 'Blackberry']
                     ]
                 ]
@@ -90,21 +96,29 @@ class GameController extends Controller
                     [
                         'image' => 'images/animals/dog.jpeg',
                         'correct_word' => 'Dog',
+                        'translation' => 'Собака',
+                        'sound' => 'sounds/animals/dog.mp3',
                         'words' => ['Dog', 'Cat', 'Lion', 'Hamster']
                     ],
                     [
                         'image' => 'images/animals/lion.webp',
                         'correct_word' => 'Lion',
+                        'translation' => 'Лев',
+                        'sound' => 'sounds/animals/lion.mp3',
                         'words' => ['Lion', 'Tiger', 'Elephant', 'Giraffe']
                     ],
                     [
                         'image' => 'images/animals/cat.jpg',
                         'correct_word' => 'Cat',
+                        'translation' => 'Кошка',
+                        'sound' => 'sounds/animals/cat.mp3',
                         'words' => ['Cat', 'Dog', 'Rabbit', 'Fox']
                     ],
                     [
                         'image' => 'images/animals/hamster.jpg',
                         'correct_word' => 'Hamster',
+                        'translation' => 'Хомяк',
+                        'sound' => 'sounds/animals/hamster.mp3',
                         'words' => ['Hamster', 'Guinea Pig', 'Mouse', 'Rat']
                     ]
                 ]
@@ -117,21 +131,29 @@ class GameController extends Controller
                     [
                         'image' => 'images/vehicles/car.jpg',
                         'correct_word' => 'Car',
+                        'translation' => 'Машина',
+                        'sound' => 'sounds/vehicles/car.mp3',
                         'words' => ['Car', 'Bus', 'Truck', 'Bicycle']
                     ],
                     [
                         'image' => 'images/vehicles/bus.webp',
                         'correct_word' => 'Bus',
+                        'translation' => 'Автобус',
+                        'sound' => 'sounds/vehicles/bus.mp3',
                         'words' => ['Bus', 'Train', 'Tram', 'Metro']
                     ],
                     [
                         'image' => 'images/vehicles/airplane.webp',
                         'correct_word' => 'Airplane',
+                        'translation' => 'Самолет',
+                        'sound' => 'sounds/vehicles/airplane.mp3',
                         'words' => ['Airplane', 'Helicopter', 'Rocket', 'Balloon']
                     ],
                     [
                         'image' => 'images/vehicles/truck.webp',
                         'correct_word' => 'Truck',
+                        'translation' => 'Грузовик',
+                        'sound' => 'sounds/vehicles/truck.mp3',
                         'words' => ['Bus', 'Truck', 'Bicycle', 'Balloon']
                     ]
                 ]
@@ -258,7 +280,6 @@ class GameController extends Controller
             'sectionTitle' => $selectedCategory['title'],
         ]);
     }
-
     //game 4
     public function gameFourSections()
     {
@@ -311,5 +332,74 @@ class GameController extends Controller
         ]);
 
     }
-
+    // game 5
+     public function sections()
+     {
+         $gameData = $this->getGameData();
+         
+         $categories = array_map(function($section) {
+             return [
+                 'icon' => $section['icon'],
+                 'title' => $section['title'],
+                 'description' => $section['description']
+             ];
+         }, $gameData);
+     
+         return view('games.game-5.sections', [
+             'categories' => $categories
+         ]);
+     }
+ 
+     public function play($section = null)
+     {
+         $categories = $this->getGameData();
+     
+         if (!$section || !array_key_exists($section, $categories)) {
+             return redirect()->route('audio-quiz.sections');
+         }
+     
+         $selectedCategory = $categories[$section];
+         
+         // Подготавливаем уровни
+         $levels = [];
+         foreach ($selectedCategory['items'] as $item) {
+             if (!isset($item['sound']) || !isset($item['translation'])) {
+                 continue;
+             }
+     
+             // Собираем русские варианты ответов для текущего вопроса
+             $russianOptions = [];
+             
+             // 1. Добавляем правильный ответ
+             $russianOptions[] = $item['translation'];
+             
+             // 2. Добавляем другие варианты (3 случайных перевода из других вопросов)
+             $otherTranslations = [];
+             foreach ($selectedCategory['items'] as $otherItem) {
+                 if ($otherItem !== $item && isset($otherItem['translation'])) {
+                     $otherTranslations[] = $otherItem['translation'];
+                 }
+             }
+             
+             // Выбираем 3 случайных уникальных перевода
+             shuffle($otherTranslations);
+             $russianOptions = array_merge($russianOptions, array_slice($otherTranslations, 0, 3));
+             
+             // Перемешиваем все варианты
+             shuffle($russianOptions);
+     
+             $levels[] = [
+                 'sound' => $item['sound'],
+                 'correct_word' => $item['translation'],
+                 'words' => $russianOptions
+             ];
+         }
+     
+         return view('games.game-5.audio-quiz', [
+             'levels' => $levels,
+             'section' => $section,
+             'sectionTitle' => $selectedCategory['title']
+         ]);
+     }
+ 
 }

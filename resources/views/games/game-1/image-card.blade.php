@@ -30,7 +30,7 @@
             background-color: #fff;
             border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 530px;
             animation: fadeIn 0.5s ease;
         }
 
@@ -232,7 +232,7 @@
 
     <div class="game-container">
         <div class="game-header">
-            <h1 class="game-title">Выбири правильный ответ</h1>
+            <h1 class="game-title">Выбери правильный ответ</h1>
         </div>
 
         <!-- Уровни игры -->

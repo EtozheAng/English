@@ -9,38 +9,47 @@
         <div class="features">
             <!-- Первая игра -->
             <div class="feature">
-                <h3 class="feature__title">Игра 1</h3>
+                <h3 class="feature__title">Угадай слово по картинке</h3>
                 <p class="feature__description">
-                    Уроки с элементами игры и тестирования для детей, которые сделают обучение веселым!
+                    Развивающая игра для детей, где нужно угадать слово, соответствующее изображению.
                 </p>
                 <a href="{{ route('games.image-card-section') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Вторая игра -->
-            <div class="feature">
-                <h3 class="feature__title">Игра 2</h3>
-                <p class="feature__description">
-                    Развивающие игры для тренировки математических навыков с увлекательными задачами.
-                </p>
-                <a href="{{ route('games.connect-words') }}" class="btn btn-primary">Играть</a>
-            </div>
-
+            <?/* <div class="feature">
+                                <h3 class="feature__title">Соедини слова</h3>
+                                <p class="feature__description">
+                                    Развивающие игры для тренировки математических навыков с увлекательными задачами.
+                                </p>
+                                <a href="{{ route('games.connect-words') }}" class="btn btn-primary">Играть</a>
+                            </div>
+                        */?>
             <!-- Третья игра -->
             <div class="feature">
-                <h3 class="feature__title">Игра 3</h3>
+                <h3 class="feature__title">Собери слово из букв</h3>
                 <p class="feature__description">
-                    Игры для тренировки логического мышления и решения задач с элементами стратегии.
+                    Составляйте слова из предложенных букв - отличная тренировка правописания и словарного запаса.
                 </p>
                 <a href="{{ route('games.create-words-section') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Четвертая игра -->
             <div class="feature">
-                <h3 class="feature__title">Игра 4</h3>
+                <h3 class="feature__title">Встать пропущенную букву</h3>
                 <p class="feature__description">
-                    Игры для тренировки логического мышления и решения задач с элементами стратегии.
+                    Встать недостающую букву в слове - игра, развивающая внимательность и знание орфографии.
                 </p>
                 <a href="{{ route('games.missing-letter-game-section') }}" class="btn btn-primary">Играть</a>
+            </div>
+
+            <!-- Пятая игра -->
+            <div class="feature">
+                <h3 class="feature__title">Угадай слово на слух</h3>
+                <p class="feature__description">
+                    Тренируем восприятие на слух - угадайте слово по его звучанию и улучшайте свои навыки аудирования.
+                </p>
+                <a href="{{ route('audio-quiz.sections') }}" class="btn btn-primary">Играть</a>
             </div>
 
             <!-- Дополнительные игры можно добавлять по аналогии -->

@@ -44,7 +44,8 @@ Route::get('games/create-words/{section?}', [GameController::class, 'createWords
 Route::get('games/missing-letter-game/', [GameController::class, 'gameFourSections'])->name('games.missing-letter-game-section');
 Route::get('games/missing-letter-game/{section?}', [GameController::class, 'gameFourCard'])->name('games.missing-letter-game');
 
-
+Route::get('games/audio-quiz/', [GameController::class, 'sections'])->name('audio-quiz.sections');
+Route::get('games/audio-quiz/{section}', [GameController::class, 'play'])->name('audio-quiz.play');
 
 
 Route::middleware(['auth','verified'])->group(function() {

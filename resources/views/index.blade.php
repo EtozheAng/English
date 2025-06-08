@@ -33,7 +33,7 @@
                         Игры, красочные карточки делают обучение увлекательным!
                         Подходит для детей от 3 до 10 лет.
                     </p>
-                    <a href="#" class="start-button">Начать учиться</a>
+                    <a href="{{ route('games') }}" class="start-button">Начать учиться</a>
                 </div>
                 <div class="about-image">
                     <img src="/images/banner/i.webp" alt="Дети учат английский">
@@ -57,6 +57,7 @@
                         <p class="features-section__item-description">Следите за своим прогрессом и получайте баллы
                             за успешное
                             прохождение уроков.</p>
+                        <a class="features-section__link" href="{{ route('dashboard') }}"></a>
                     </div>
                 </div>
             </div>

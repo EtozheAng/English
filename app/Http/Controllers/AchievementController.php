@@ -13,29 +13,30 @@ class AchievementController extends Controller
         
         $games = [
             [
-                'name' => "Сопоставление слов",
-                'slug' => "word_game",
-                'icon' => "📝",
-                'color' => "from-pink-300 to-purple-300"
-            ],
-            [
-                'name' => "Пропущенные буквы",
-                'slug' => "missing_letter",
-                'icon' => "🔠",
-                'color' => "from-blue-300 to-cyan-300"
-            ],
-            [
-                'name' => "Карточки с картинками",
+                'name' => "Угадай слово по картинке",
                 'slug' => "image-card",
                 'icon' => "🖼️",
                 'color' => "from-green-300 to-teal-300"
             ],
             [
-                'name' => "Соедини слова",
-                'slug' => "word-matching",
-                'icon' => "📖",
+                'name' => "Собери слово из букв",
+                'slug' => "word_game",
+                'icon' => "🧩",
+                'color' => "from-pink-300 to-purple-300"
+            ],
+            [
+                'name' => "Встать пропущенную букву",
+                'slug' => "missing_letter",
+                'icon' => "🆎",
+                'color' => "from-blue-300 to-cyan-300"
+            ],
+            [
+                'name' => "Угадай слово на слух",
+                'slug' => "audio-quiz",
+                'icon' => "🎧",
                 'color' => "from-green-300 to-teal-300"
-            ]
+            ],
+
         ];
 
         // Получаем результаты для всех игр с учетом разделов
@@ -59,7 +60,7 @@ class AchievementController extends Controller
         });
 
         $totalScore = $results->sum('totalScore');
-        $progressPercent = min(100, ($totalScore / 300) * 100);
+        $progressPercent = min(100, ($totalScore / 480) * 100);
 
         return view('dashboard', compact('results', 'totalScore', 'progressPercent'));
     }
