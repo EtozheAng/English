@@ -12,7 +12,16 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'],
+            input: [
+                'resources/sass/app.scss',
+                'resources/js/app.js',
+                'resources/js/base-game.js',
+                'resources/js/audio-quiz.js',
+                'resources/js/image-card-game.js',
+                'resources/js/missing-letter-game.js',
+                'resources/js/word-game.js',
+                'resources/js/word-matching-game.js',
+            ],
             refresh: true,
         }),
     ],

@@ -8,6 +8,3 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-import { BaseGame } from './base-game.js';
-
-window.BaseGame = BaseGame;

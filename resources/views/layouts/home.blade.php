@@ -8,7 +8,7 @@
     <link rel="icon" href="{{ asset('/favicon.ico') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite('resources/js/app.js')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>

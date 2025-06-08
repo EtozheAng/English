@@ -15,16 +15,6 @@
                 </p>
                 <a href="{{ route('games.image-card-section') }}" class="btn btn-primary">Играть</a>
             </div>
-
-            <!-- Вторая игра -->
-            <?/* <div class="feature">
-                                <h3 class="feature__title">Соедини слова</h3>
-                                <p class="feature__description">
-                                    Развивающие игры для тренировки математических навыков с увлекательными задачами.
-                                </p>
-                                <a href="{{ route('games.connect-words') }}" class="btn btn-primary">Играть</a>
-                            </div>
-                        */?>
             <!-- Третья игра -->
             <div class="feature">
                 <h3 class="feature__title">Собери слово из букв</h3>
