@@ -7,10 +7,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScoreController;
 use Illuminate\Support\Facades\Route;
 
-
-
-
-
 // Главная страница
 Route::get('/', function () {
     return view('index');
@@ -28,8 +24,6 @@ Route::get('/alphabet', function () {
 
 
 Route::get('/dictionary', [Dictionary::class, 'index'])->name('dictionary');
-
-
 
 // Страницы Игр
 Route::get('/games', [GameController::class, 'index'])->name('games');
@@ -51,11 +45,6 @@ Route::get('games/audio-quiz/{section}', [GameController::class, 'play'])->name(
 Route::middleware(['auth','verified'])->group(function() {
     Route::get('/dashboard', [AchievementController::class, 'index'])->name('dashboard');
 });
-
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
